@@ -230,5 +230,3 @@ By completing this lab, you will understand:
 **Maintained by:** Rick's Home Lab  
 *Part of the CCNA Fundamentals Series - Building upon Project 1*
 
-## **Career Connection:**
-This lab demonstrates essential networking fundamentals that interviewers expect you to understand. Being able to explain switching concepts and troubleshoot layer 2 issues is crucial for entry-level network positions.
