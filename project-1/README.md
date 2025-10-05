@@ -44,7 +44,7 @@
 ## **Topology & Design**
 ```mermaid
 graph LR
-A[PC1</br>192.168.1.1] --> B[PC2</br>192.168.1.2]
+A[PC1</br>192.168.1.1] -->|crossover cable| B[PC2</br>192.168.1.2]
 ```
 
 ### **Network Design Table**
