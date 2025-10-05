@@ -47,62 +47,56 @@
 ## **Topology & Design**
 
 ### **Physical vs Logical View**
-```
-Physical Topology:
-                    [Router G0/0/0]
-                         │
-                         │ (Trunk - Fa0/24)
-                         │
-                     [Switch 2960]
-         ┌───────────────┼───────────────┐
-         │               │               │
-    [PC1] [PC2] [PC3]    │          [PC4] [PC5] [PC6]
-    Fa0/1 Fa0/2 Fa0/3    │          Fa0/4 Fa0/5 Fa0/6
-
-Logical Topology (Router-on-a-Stick):
-    [VLAN 10 Gateway]    [Router G0/0/0]    [VLAN 20 Gateway]
-      10.1.10.1/24     ┌─── Sub-interfaces ───┐    10.1.20.1/24
-          │            │  G0/0/0.10: VLAN 10  │           │
-          │            │  G0/0/0.20: VLAN 20  │           │
-          ▼            └───────────────────────┘           ▼
-    [VLAN 10 Network]                              [VLAN 20 Network]
-     10.1.10.0/24                                   10.1.20.0/24
+```mermaid
+graph TB
+    R[Router<br/>G0/0.10: 10.1.10.1/24<br/>G0/0.20: 10.1.20.1/24]
+    SW[Switch 2960]
+    
+    subgraph "VLAN 10 - 10.1.10.0/24"
+        PC1[PC1<br/>10.1.10.10/24]
+        PC2[PC2<br/>10.1.10.11/24]
+        PC3[PC3<br/>10.1.10.12/24]
+    end
+    
+    subgraph "VLAN 20 - 10.1.20.0/24"
+        PC4[PC4<br/>10.1.20.10/24]
+        PC5[PC5<br/>10.1.20.11/24]
+        PC6[PC6<br/>10.1.20.12/24]
+    end
+    
+    PC1 -->|access port<br/>Fa0/1| SW
+    PC2 -->|access port<br/>Fa0/2| SW
+    PC3 -->|access port<br/>Fa0/3| SW
+    PC4 -->|access port<br/>Fa0/4| SW
+    PC5 -->|access port<br/>Fa0/5| SW
+    PC6 -->|access port<br/>Fa0/6| SW
+    SW -->|802.1Q trunk<br/>Fa0/24| R
 ```
 
 ### **Packet Flow Visualization**
-```
-PC1 (VLAN 10)                 Switch                  Router                  PC4 (VLAN 20)
-10.1.10.10                    (Trunk)             (G0/0/0.10 & .20)          10.1.20.10
-     │                            │                        │                       │
-     │  PC1 pings PC4            │                        │                       │
-     │  (10.1.20.10)            │                        │                       │
-     │                            │                        │                       │
-     │ • Packet to 10.1.20.10    │                        │                       │
-     │ • Via gateway 10.1.10.1   │                        │                       │
-     │                            │                        │                       │
-     │───────────────────────────>│                        │                       │
-     │                            │                        │                       │
-     │                            │ • Adds VLAN 10 tag     │                       │
-     │                            │ • Forwards via trunk   │                       │
-     │                            │                        │                       │
-     │                            │───────────────────────>│                       │
-     │                            │                        │                       │
-     │                            │                        │ • Router strips VLAN 10 tag │
-     │                            │                        │ • Routes to VLAN 20    │
-     │                            │                        │ • Adds VLAN 20 tag     │
-     │                            │                        │                       │
-     │                            │<───────────────────────│                       │
-     │                            │                        │                       │
-     │                            │ • Forwards to VLAN 20  │                       │
-     │                            │───────────────────────────────────────────────>│
-     │                            │                        │                       │
-     │                            │                        │                       │ • PC4 receives packet
-     │                            │                        │                       │ • Sends reply to 10.1.10.10
-     │                            │                        │                       │
-     │                            │<───────────────────────────────────────────────│
-     │                            │                        │                       │
-     │  (Reverse process occurs)  │                        │                       │
-     │<───────────────────────────│                        │                       │
+```mermaid
+sequenceDiagram
+    participant PC1 as PC1 (VLAN 10)<br/>10.1.10.10
+    participant SW as Switch
+    participant R as Router<br/>G0/0/0.10 & .20
+    participant PC4 as PC4 (VLAN 20)<br/>10.1.20.10
+
+    Note over PC1,PC4: PC1 pings PC4 (10.1.20.10)
+    
+    PC1->>SW: Sent packet to 10.1.20.10<br/>Via gateway 10.1.10.1
+    
+    SW->>R: Adds VLAN 10 tag<br/>Forwards via trunk
+    
+    R->>SW: Router strips VLAN 10 tag<br/>Routes to VLAN 20<br/>Adds VLAN 20 tag
+    
+    SW->>PC4: Forwards to VLAN 20
+    Note over PC4: • PC4 receives packet<br/>• Sends reply to 10.1.10.10
+    
+    PC4->>SW: Reply to 10.1.10.10
+    SW->>R: Adds VLAN 20 tag<br/>Forwards via trunk
+    R->>SW: Router strips VLAN 20 tag<br/>Routes to VLAN 10<br/>Adds VLAN 10 tag
+    SW->>PC1: Forwards to VLAN 10
+    Note over PC1: • PC1 receives reply packet from PC4 
 ```
 
 ### **Network Design Table**
@@ -110,8 +104,8 @@ PC1 (VLAN 10)                 Switch                  Router                  PC
 |-----------|---------------|---------|
 | VLAN 10 | 10.1.10.0/24 | Sales Department |
 | VLAN 20 | 10.1.20.0/24 | HR Department |
-| Router G0/0/0.10 | 10.1.10.1/24 | VLAN 10 Gateway |
-| Router G0/0/0.20 | 10.1.20.1/24 | VLAN 20 Gateway |
+| Router G0/0.10 | 10.1.10.1/24 | VLAN 10 Gateway |
+| Router G0/0.20 | 10.1.20.1/24 | VLAN 20 Gateway |
 | Trunk Port | Switch Fa0/24 | Carries multiple VLANs |
 
 ### **The WHY**
@@ -132,7 +126,7 @@ Switch(config)# interface fastethernet 0/24
 Switch(config-if)# switchport mode trunk
 Switch(config-if)# switchport trunk native vlan 99
 Switch(config-if)# switchport trunk allowed vlan 10,20
-Switch(config-if)# description Trunk to Router G0/0/0
+Switch(config-if)# description Trunk to Router G0/0
 Switch(config-if)# no shutdown
 Switch(config-if)# exit
 
@@ -152,14 +146,14 @@ Router(config-if)# no shutdown
 Router(config-if)# exit
 
 ! Configure sub-interface for VLAN 10
-Router(config)# interface gigabitethernet 0/0/0.10
+Router(config)# interface gigabitethernet 0/0.10
 Router(config-subif)# description VLAN 10 - Sales Department
 Router(config-subif)# encapsulation dot1Q 10
 Router(config-subif)# ip address 10.1.10.1 255.255.255.0
 Router(config-subif)# exit
 
 ! Configure sub-interface for VLAN 20
-Router(config)# interface gigabitethernet 0/0/0.20
+Router(config)# interface gigabitethernet 0/0.20
 Router(config-subif)# description VLAN 20 - HR Department
 Router(config-subif)# encapsulation dot1Q 20
 Router(config-subif)# ip address 10.1.20.1 255.255.255.0
@@ -203,9 +197,9 @@ Fa0/24      10,20
 # Router sub-interface status:
 Router# show ip interface brief
 Interface                  IP-Address      OK? Method Status
-GigabitEthernet0/0/0       unassigned      YES manual up
-GigabitEthernet0/0/0.10    10.1.10.1       YES manual up
-GigabitEthernet0/0/0.20    10.1.20.1       YES manual up
+GigabitEthernet0/0       unassigned      YES manual up
+GigabitEthernet0/0.10    10.1.10.1       YES manual up
+GigabitEthernet0/0.20    10.1.20.1       YES manual up
 
 # Successful inter-VLAN ping:
 C:\> ping 10.1.20.10
@@ -254,11 +248,11 @@ debug ip packet (use cautiously)
 ### **802.1Q Tagging Process**
 ```mermaid
 graph LR
-    A[PC1 Sends Frame] --> B[Switch Adds<br>802.1Q Tag]
+    A[PC1 Sends Frame] -->|untagged| B[Switch Adds<br>802.1Q Tag]
     B --> C[Router Processes<br>Tagged Frame]
     C --> D[Router Routes<br>Between VLANs]
     D --> E[Switch Forwards<br>to Destination VLAN]
-    E --> F[PC4 Receives Frame]
+    E -->|untagged| F[PC4 Receives Frame]
 ```
 
 ### **Key Concepts**
@@ -331,7 +325,6 @@ By completing this lab, you will understand:
 ---
 
 **Maintained by:** Rick's Home Lab 
+
 *Part of the CCNA Fundamentals Series - Advanced Layer 2/Layer 3 Integration*
 
-## **Career Connection:**
-Router-on-a-Stick is a fundamental concept tested in CCNA exams and networking interviews. This project demonstrates you understand not just VLAN isolation, but how to properly connect segmented networks. The ability to explain 802.1Q tagging and sub-interface configuration shows practical knowledge beyond theoretical concepts.
