@@ -279,5 +279,3 @@ By completing this lab, you will understand:
 **Maintained by:** Rick's Home Lab  
 *Part of the CCNA Fundamentals Series - Mastering Layer 2 Segmentation*
 
-## **Career Connection:**
-VLAN configuration is a fundamental skill tested in nearly all networking interviews. This project demonstrates you understand not just how to configure VLANs, but why they're essential for modern network design. The ability to explain broadcast domains and security isolation shows depth of understanding beyond simple command memorization.
