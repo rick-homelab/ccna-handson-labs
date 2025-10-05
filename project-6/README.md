@@ -1,6 +1,6 @@
 # **Project 6: Basic Static Routing**
 
-**Time Estimate:** 45 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2024-12-19
+**Time Estimate:** 45 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
 
 ## **Table of Contents**
 - [Objective](#objective)
@@ -30,153 +30,183 @@
 - Packet Tracer with multiple routers
 
 ### **Implementation Checklist**
-- [ ] Configure Router1 interfaces and static route (15 minutes)
-- [ ] Configure Router2 interfaces and static route (15 minutes)
+- [ ] Configure R1 interfaces and static route (15 minutes)
+- [ ] Configure R2 interfaces and static route (15 minutes)
 - [ ] Set up PC IP addresses and gateways (5 minutes)
 - [ ] Test multi-hop connectivity (10 minutes)
 
 ### **Time Breakdown**
 | Phase | Time | Focus |
 |-------|------|-------|
-| Router1 Config | 15 min | Interfaces + static route |
-| Router2 Config | 15 min | Interfaces + static route |
+| R1 Config | 15 min | Interfaces + static route |
+| R2 Config | 15 min | Interfaces + static route |
 | PC Setup | 5 min | IP and gateway configuration |
 | Verification | 10 min | Cross-network testing |
 
 ## **Topology & Design**
 
 ### **Network Architecture**
-```
-Network A (192.168.1.0/24)     Network B (10.0.0.0/30)     Network C (192.168.2.0/24)
-        │                               │                             │
-      [PC1] ────────────────────── [Router1] ─────────────────── [Router2] ─────────────────── [PC2]
-  192.168.1.10/24          G0/0/0    │    G0/0/1        G0/0/0    │    G0/0/1          192.168.2.10/24
-                           192.168.1.1 │  10.0.0.1      10.0.0.2   │  192.168.2.1
-                                        │                           │
-                                  Gateway for PC1             Gateway for PC2
+```mermaid
+graph TB
+    subgraph "Network A: 192.168.1.0/24<br/>HQ LAN"
+        PC1[PC1<br/>192.168.1.10/24]
+        PC2[PC2<br/>192.168.1.11/24]
+        SW1[Switch1<br/>2960-24TT]
+    end
+    
+    subgraph "Network B: 10.0.0.0/30<br/>WAN Link"
+        R1[R1: 1941 Router<br/>G0/0: 192.168.1.1/24<br/>G0/1: 10.0.0.1/30]
+        R2[R2: 1941 Router<br/>G0/0: 10.0.0.2/30<br/>G0/1: 192.168.2.1/24]
+    end
+    
+    subgraph "Network C: 192.168.2.0/24<br/>Branch LAN"
+        PC3[PC3<br/>192.168.2.10/24]
+        PC4[PC4<br/>192.168.2.11/24]
+        SW2[Switch2<br/>2960-24TT]
+    end
+    
+    PC1 -->|straight-through| SW1
+    PC2 -->|straight-through| SW1
+    SW1 -->|straight-through| R1
+    R1 -->|crossover| R2
+    R2 -->|straight-through| SW2
+    SW2 -->|straight-through| PC3
+    SW2 -->|straight-through| PC4
 ```
 
 ### **Packet Flow Visualization**
-```
-PC1 (Network A)                Router1                  Router2                 PC2 (Network C)
-192.168.1.10             G0/0/0     G0/0/1        G0/0/0     G0/0/1         192.168.2.10
-     │                      │           │            │           │                 │
-     │  PC1 pings PC2       │           │            │           │                 │
-     │  (192.168.2.10)      │           │            │           │                 │
-     │                      │           │            │           │                 │
-     │ • Packet to 192.168.2.10 │           │            │           │                 │
-     │ • Via gateway 192.168.1.1│           │            │           │                 │
-     │                      │           │            │           │                 │
-     │──────────────────────>│           │            │           │                 │
-     │                      │           │            │           │                 │
-     │                      │ • Checks routing table │           │                 │
-     │                      │ • Static route: 192.168.2.0/24 via 10.0.0.2 │           │                 │
-     │                      │           │            │           │                 │
-     │                      │─────────────────────────>│           │                 │
-     │                      │           │            │           │                 │
-     │                      │           │            │ • Checks routing table │                 │
-     │                      │           │            │ • Connected: 192.168.2.0/24 │                 │
-     │                      │           │            │           │                 │
-     │                      │           │            │─────────────────────────────>│
-     │                      │           │            │           │                 │
-     │                      │           │            │           │                 │ • PC2 receives packet
-     │                      │           │            │           │                 │ • Sends reply to 192.168.1.10
-     │                      │           │            │           │                 │
-     │  (Reverse process with static route on Router2)  │                 │
-     │<──────────────────────│           │            │           │                 │
+```mermaid
+sequenceDiagram
+    participant PC1 as PC1 (Network A)<br/>192.168.1.10
+    participant R1 as R1: 1941 Router<br/>G0/0: 192.168.1.1<br/>G0/1: 10.0.0.1
+    participant R2 as R2: 1941 Router<br/>G0/0: 10.0.0.2<br/>G0/1: 192.168.2.1
+    participant PC3 as PC3 (Network C)<br/>192.168.2.10
+
+    Note over PC1,PC3: PC1 pings PC3 (192.168.2.10)
+    
+    PC1->>R1: Packet to 192.168.2.10<br/>Via gateway 192.168.1.1
+    Note over PC1: • Destination: 192.168.2.10<br/>• Gateway: 192.168.1.1
+    
+    R1->>R2: Static route: 192.168.2.0/24 via 10.0.0.2
+    Note over R1: • Checks routing table<br/>• Static route found<br/>• Forwards to 10.0.0.2
+    
+    R2->>PC3: Direct delivery to 192.168.2.10
+    Note over R2: • Connected network<br/>• Direct delivery<br/>• Decrements TTL
+    
+    PC3->>R2: Reply to 192.168.1.10
+    R2->>R1: Static route: 192.168.1.0/24 via 10.0.0.1
+    R1->>PC1: Direct delivery to 192.168.1.10
 ```
 
 ### **Network Design Table**
 | Network | Subnet | Purpose | Devices |
 |---------|--------|---------|---------|
-| Network A | 192.168.1.0/24 | LAN 1 | PC1, Router1 G0/0/0 |
-| Network B | 10.0.0.0/30 | WAN Link | Router1 G0/0/1, Router2 G0/0/0 |
-| Network C | 192.168.2.0/24 | LAN 2 | PC2, Router2 G0/0/1 |
+| Network A | 192.168.1.0/24 | HQ LAN | PC1, PC2, Switch1, R1 G0/0 |
+| Network B | 10.0.0.0/30 | WAN Link | R1 G0/1, R2 G0/0 |
+| Network C | 192.168.2.0/24 | Branch LAN | PC3, PC4, Switch2, R2 G0/1 |
+
+### **Device Specifications**
+| Device | Model | Role | Key Interfaces |
+|--------|-------|------|----------------|
+| R1 | Cisco 1941 | HQ Router | G0/0: 192.168.1.1/24, G0/1: 10.0.0.1/30 |
+| R2 | Cisco 1941 | Branch Router | G0/0: 10.0.0.2/30, G0/1: 192.168.2.1/24 |
+| Switch1 | 2960-24TT | HQ Access | Fa0/1-24 for PCs |
+| Switch2 | 2960-24TT | Branch Access | Fa0/1-24 for PCs |
 
 ### **The WHY**
 - **Why /30 for WAN link?** Efficient use of IP space for point-to-point connections
+- **Why 1941 routers?** Enterprise-grade with Gigabit Ethernet interfaces
 - **Why static routing?** Demonstrates manual route configuration fundamentals
-- **Why multiple routers?** Shows real-world multi-hop network scenarios
-- **Why specific IP ranges?** Standard private addressing conventions
+- **Why multiple end devices?** Real-world network simulation
 
 ## **Configuration**
 
-### **Router1 Configuration**
+### **R1 Configuration (HQ Router)**
 ```bash
-Router1> enable
-Router1# configure terminal
+R1> enable
+R1# configure terminal
 
 ! Configure LAN interface (Network A)
-Router1(config)# interface gigabitethernet 0/0/0
-Router1(config-if)# description LAN Connection to Network A
-Router1(config-if)# ip address 192.168.1.1 255.255.255.0
-Router1(config-if)# no shutdown
-Router1(config-if)# exit
+R1(config)# interface gigabitethernet 0/0
+R1(config-if)# description HQ-LAN-Network-A
+R1(config-if)# ip address 192.168.1.1 255.255.255.0
+R1(config-if)# no shutdown
+R1(config-if)# exit
 
 ! Configure WAN interface (Network B)
-Router1(config)# interface gigabitethernet 0/0/1
-Router1(config-if)# description WAN Link to Router2
-Router1(config-if)# ip address 10.0.0.1 255.255.255.252
-Router1(config-if)# no shutdown
-Router1(config-if)# exit
+R1(config)# interface gigabitethernet 0/1
+R1(config-if)# description WAN-Link-to-R2
+R1(config-if)# ip address 10.0.0.1 255.255.255.252
+R1(config-if)# no shutdown
+R1(config-if)# exit
 
-! Add static route to Network C via Router2
-Router1(config)# ip route 192.168.2.0 255.255.255.0 10.0.0.2
-Router1(config)# end
-Router1# copy running-config startup-config
+! Add static route to Network C via R2
+R1(config)# ip route 192.168.2.0 255.255.255.0 10.0.0.2
+R1(config)# end
+R1# copy running-config startup-config
 ```
 
-### **Router2 Configuration**
+### **R2 Configuration (Branch Router)**
 ```bash
-Router2> enable
-Router2# configure terminal
+R2> enable
+R2# configure terminal
 
 ! Configure WAN interface (Network B)
-Router2(config)# interface gigabitethernet 0/0/0
-Router2(config-if)# description WAN Link to Router1
-Router2(config-if)# ip address 10.0.0.2 255.255.255.252
-Router2(config-if)# no shutdown
-Router2(config-if)# exit
+R2(config)# interface gigabitethernet 0/0
+R2(config-if)# description WAN-Link-to-R1
+R2(config-if)# ip address 10.0.0.2 255.255.255.252
+R2(config-if)# no shutdown
+R2(config-if)# exit
 
 ! Configure LAN interface (Network C)
-Router2(config)# interface gigabitethernet 0/0/1
-Router2(config-if)# description LAN Connection to Network C
-Router2(config-if)# ip address 192.168.2.1 255.255.255.0
-Router2(config-if)# no shutdown
-Router2(config-if)# exit
+R2(config)# interface gigabitethernet 0/1
+R2(config-if)# description Branch-LAN-Network-C
+R2(config-if)# ip address 192.168.2.1 255.255.255.0
+R2(config-if)# no shutdown
+R2(config-if)# exit
 
-! Add static route to Network A via Router1
-Router2(config)# ip route 192.168.1.0 255.255.255.0 10.0.0.1
-Router2(config)# end
-Router2# copy running-config startup-config
+! Add static route to Network A via R1
+R2(config)# ip route 192.168.1.0 255.255.255.0 10.0.0.1
+R2(config)# end
+R2# copy running-config startup-config
+```
+
+### **Switch Configurations**
+```bash
+! Basic switch configuration (both switches)
+Switch> enable
+Switch# configure terminal
+Switch(config)# hostname SW1
+SW1(config)# exit
+SW1# copy running-config startup-config
 ```
 
 ### **PC Configurations**
 ```bash
-# Network A - PC1:
-IP Address: 192.168.1.10/24
-Default Gateway: 192.168.1.1
+# Network A - HQ Devices:
+PC1: 192.168.1.10/24 | Gateway: 192.168.1.1
+PC2: 192.168.1.11/24 | Gateway: 192.168.1.1
 
-# Network C - PC2:
-IP Address: 192.168.2.10/24  
-Default Gateway: 192.168.2.1
+# Network C - Branch Devices:
+PC3: 192.168.2.10/24 | Gateway: 192.168.2.1
+PC4: 192.168.2.11/24 | Gateway: 192.168.2.1
 ```
 
 ### **The WHY**
 - **Why /30 mask?** Provides exactly 2 usable IPs for point-to-point link
+- **Why interface descriptions?** Professional practice for documentation
 - **Why static route syntax?** `ip route [network] [mask] [next-hop]`
-- **Why next-hop IP?** Tells router where to forward packets for remote network
 - **Why save configuration?** Prevents route loss after router reboot
 
 ## **Verification**
 
 ### **Expected Results**
 ```bash
-# Router1 routing table:
-Router1# show ip route
+# R1 routing table:
+R1# show ip route
 Codes: C - connected, S - static, I - IGRP, R - RIP...
-C    192.168.1.0/24 is directly connected, GigabitEthernet0/0/0
-C    10.0.0.0/30 is directly connected, GigabitEthernet0/0/1
+C    192.168.1.0/24 is directly connected, GigabitEthernet0/0
+C    10.0.0.0/30 is directly connected, GigabitEthernet0/1
 S    192.168.2.0/24 [1/0] via 10.0.0.2
 
 # Successful end-to-end ping:
@@ -195,7 +225,7 @@ Tracing route to 192.168.2.10 over a maximum of 30 hops:
 1. **Interface Status:** `show ip interface brief` on both routers
 2. **Routing Tables:** `show ip route` to verify static routes
 3. **Direct Connectivity:** Ping between router interfaces
-4. **End-to-End Test:** Ping from PC1 to PC2 and vice versa
+4. **End-to-End Test:** Ping from PC1 to PC3 and vice versa
 5. **Path Verification:** Traceroute to confirm packet path
 
 ### **The WHY**
@@ -244,20 +274,24 @@ graph TB
     H --> I[Forward Packet]
 ```
 
+### **Static Route Operation**
+```mermaid
+graph LR
+    A[Packet Arrives] --> B[Extract Destination IP]
+    B --> C[Search Routing Table]
+    C --> D{Static Route Match?}
+    D -->|Yes| E[Forward to Next-Hop]
+    D -->|No| F[Check Connected Routes]
+    F --> G{Connected Match?}
+    G -->|Yes| H[Forward Directly]
+    G -->|No| I[Drop Packet - No Route]
+```
+
 ### **Key Concepts**
 - **Longest Prefix Match:** Router chooses most specific route available
 - **Administrative Distance:** Static routes have AD of 1 (highly trusted)
 - **TTL Mechanism:** Prevents infinite loops in routing
 - **Recursive Lookup:** Router may need multiple table lookups for final forwarding
-
-### **Static Route Components**
-```
-ip route [destination_network] [subnet_mask] [next_hop]
-    │               │               │           │
-    Command         Network         Mask      Next Router
-    to add          to reach        for        IP Address
-    static route                  network
-```
 
 ## **Skills Demonstrated**
 - ✅ **Static Route Configuration** - Manual routing table population
@@ -306,5 +340,3 @@ By completing this lab, you will understand:
 **Maintained by:** Rick's Home Lab  
 *Part of the CCNA Fundamentals Series - Mastering Routing Concepts*
 
-## **Career Connection:**
-Static routing is a fundamental concept that appears in virtually all networking interviews. This project demonstrates you understand not just how to configure routes, but how packets actually move through multi-router networks. The ability to interpret routing tables and use traceroute for troubleshooting are essential skills for network troubleshooting roles.
