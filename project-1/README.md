@@ -185,4 +185,5 @@ By completing this lab, you will understand:
 ---
 
 **Maintained by:** Rick's Home Lab
+
 *Part of the CCNA Fundamentals Series*
