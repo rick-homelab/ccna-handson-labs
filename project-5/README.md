@@ -1,6 +1,6 @@
 # **Project 5: Router-on-a-Stick Inter-VLAN Routing**
 
-**Time Estimate:** 40 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2024-12-19
+**Time Estimate:** 40 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
 
 ## **Table of Contents**
 - [Objective](#objective)
