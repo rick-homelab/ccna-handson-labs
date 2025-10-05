@@ -1,6 +1,6 @@
 # **Project 3: Basic Router Configuration and Inter-VLAN Routing**
 
-**Time Estimate:** 35 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2024-12-19
+**Time Estimate:** 35 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
 
 ## **Table of Contents**
 - [Objective](#objective)
@@ -44,12 +44,21 @@
 | Verification | 10 min | Cross-subnet testing |
 
 ## **Topology & Design**
-```ascii
-    Network A (192.168.1.0/24)          Network B (192.168.2.0/24)
-        │                                       │
-    [PC1] ─── [Switch1] ─── [Router] ─── [Switch2] ─── [PC3]
-    [PC2]    192.168.1.1/24  (G0/0/0)  192.168.2.1/24   [PC4]
-              Gateway                   Gateway
+```mermaid
+graph LR
+    subgraph "Network A : 192.168.1.0/24"
+        PC1[PC1</br>192.168.1.10/24] --> SW1[Switch1]
+        PC2[PC2</br>192.168.1.11/24] --> SW1
+    end
+    
+    SW1 --> R[Router</br>G0/0: 192.168.1.1/24</br>G0/1: 192.168.2.1/24]
+    
+    subgraph "Network B : 192.168.2.0/24"
+        SW2[Switch2] --> PC3[PC3</br>192.168.2.10/24]
+        SW2 --> PC4[PC4</br>192.168.2.11/24]
+    end
+    
+    R --> SW2
 ```
 
 ### **Network Design Table**
@@ -57,8 +66,8 @@
 |-----------|---------------|---------|
 | Network A | 192.168.1.0/24 | First subnet/VLAN |
 | Network B | 192.168.2.0/24 | Second subnet/VLAN |
-| Router G0/0/0 | 192.168.1.1/24 | Network A gateway |
-| Router G0/0/1 | 192.168.2.1/24 | Network B gateway |
+| Router G0/0 | 192.168.1.1/24 | Network A gateway |
+| Router G0/1 | 192.168.2.1/24 | Network B gateway |
 
 ### **The WHY**
 - **Why separate subnets?** Demonstrates routing between broadcast domains
@@ -73,14 +82,14 @@ Router> enable
 Router# configure terminal
 
 ! Configure Network A interface
-Router(config)# interface gigabitethernet0/0/0
+Router(config)# interface gigabitethernet0/0
 Router(config-if)# description Connection to Network A
 Router(config-if)# ip address 192.168.1.1 255.255.255.0
 Router(config-if)# no shutdown
 Router(config-if)# exit
 
 ! Configure Network B interface
-Router(config)# interface gigabitethernet0/0/1
+Router(config)# interface gigabitethernet0/1
 Router(config-if)# description Connection to Network B
 Router(config-if)# ip address 192.168.2.1 255.255.255.0
 Router(config-if)# no shutdown
@@ -238,8 +247,8 @@ By completing this lab, you will understand:
 
 ---
 
-**Maintained by:** Rick's Home Lab 
+**Maintained by:** Rick's Home Lab
+
 *Part of the CCNA Fundamentals Series - Progressing to Layer 3 Operations*
 
-## **Career Connection:**
-This project demonstrates fundamental routing concepts that are essential for any network role. Interviewers frequently ask about default gateway functionality and basic router configuration. Mastering these concepts shows you understand how networks actually communicate beyond simple switching.
+
