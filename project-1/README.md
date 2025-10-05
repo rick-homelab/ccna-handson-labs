@@ -70,12 +70,12 @@ graph LR
 # PC1 Configuration
 IP Address: 192.168.1.1
 Subnet Mask: 255.255.255.0
-Default Gateway: [Leave blank]
+Default Gateway:
 
 # PC2 Configuration  
 IP Address: 192.168.1.2
 Subnet Mask: 255.255.255.0
-Default Gateway: [Leave blank]
+Default Gateway:
 ```
 
 ### **The WHY**
