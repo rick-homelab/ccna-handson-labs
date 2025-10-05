@@ -47,37 +47,38 @@
 ## **Topology & Design**
 
 ### **Physical vs Logical View**
-```
-Physical Topology:
-    [Switch 2960]
-   ┌─┼─┼─┼─┼─┼─┐
-   │ │ │ │ │ │ │
-  [PC1][PC2][PC3][PC4][PC5][PC6]
-   Fa0/1 Fa0/2 Fa0/3 Fa0/4 Fa0/5 Fa0/6
-
-Logical Topology (VLAN Segmentation):
-    Virtual Switch for VLAN 10        Virtual Switch for VLAN 20
-         (Sales)                           (HR)
-    ┌───────────────┐                ┌───────────────┐
-    │ [PC1] [PC2] [PC3] │            │ [PC4] [PC5] [PC6] │
-    │  .10   .11   .12  │            │  .10   .11   .12  │
-    └───────────────┘                └───────────────┘
-    10.1.10.0/24 network            10.1.20.0/24 network
+```mermaid
+graph TB
+    SW[Switch 2960]
+    
+    subgraph "VLAN 10 - Sales - 10.1.10.0/24"
+        PC1[PC1<br/>10.1.10.10]
+        PC2[PC2<br/>10.1.10.11]
+        PC3[PC3<br/>10.1.10.12]
+    end
+    
+    subgraph "VLAN 20 - HR - 10.1.20.0/24"
+        PC4[PC4<br/>10.1.20.10]
+        PC5[PC5<br/>10.1.20.11]
+        PC6[PC6<br/>10.1.20.12]
+    end
+    
+    PC1 -->|access port<br/>Fa0/1| SW
+    PC2 -->|access port<br/>Fa0/2| SW
+    PC3 -->|access port<br/>Fa0/3| SW
+    PC4 -->|access port<br/>Fa0/4| SW
+    PC5 -->|access port<br/>Fa0/5| SW
+    PC6 -->|access port<br/>Fa0/6| SW
 ```
 
 ### **VLAN Port Assignment Flow**
-```
-Switch Configuration Process:
-    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-    │ Create VLAN 10  │───>│ Assign Ports    │───>│ Verify VLAN     │
-    │ Name: Sales     │    │ Fa0/1-3 to     │    │ Isolation       │
-    └─────────────────┘    │ VLAN 10         │    │ Works           │
-                           └─────────────────┘    └─────────────────┘
-    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-    │ Create VLAN 20  │───>│ Assign Ports    │───>│ Confirm No      │
-    │ Name: HR        │    │ Fa0/4-6 to     │    │ Cross-VLAN      │
-    └─────────────────┘    │ VLAN 20         │    │ Communication   │
-                           └─────────────────┘    └─────────────────┘
+```mermaid
+graph LR
+    A[Create VLAN 10<br/>Name: Sales] --> B[Assign Ports<br/>Fa0/1-3 to VLAN 10]
+    B --> C[Verify VLAN<br/>Isolation Works]
+    
+    D[Create VLAN 20<br/>Name: HR] --> E[Assign Ports<br/>Fa0/4-6 to VLAN 20]
+    E --> F[Confirm No<br/>Cross-VLAN Communication]
 ```
 
 ### **VLAN Design Table**
