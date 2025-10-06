@@ -1,6 +1,6 @@
 # **Project 6: Basic Static Routing**
 
-**Time Estimate:** 45 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
+**Time Estimate:** 45 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-6
 
 ## **Table of Contents**
 - [Objective](#objective)
@@ -51,35 +51,35 @@ graph TB
     subgraph "Network A: 192.168.1.0/24<br/>HQ LAN"
         PC1[PC1<br/>192.168.1.10/24]
         PC2[PC2<br/>192.168.1.11/24]
-        SW1[Switch1<br/>2960-24TT]
+        SW1[Switch1<br/>2960]
     end
     
     subgraph "Network B: 10.0.0.0/30<br/>WAN Link"
-        R1[R1: 1941 Router<br/>G0/0: 192.168.1.1/24<br/>G0/1: 10.0.0.1/30]
-        R2[R2: 1941 Router<br/>G0/0: 10.0.0.2/30<br/>G0/1: 192.168.2.1/24]
+        R1[R1: 2911 Router<br/>G0/0: 192.168.1.1/24<br/>G0/1: 10.0.0.1/30]
+        R2[R2: 2911 Router<br/>G0/0: 10.0.0.2/30<br/>G0/1: 192.168.2.1/24]
     end
     
     subgraph "Network C: 192.168.2.0/24<br/>Branch LAN"
         PC3[PC3<br/>192.168.2.10/24]
         PC4[PC4<br/>192.168.2.11/24]
-        SW2[Switch2<br/>2960-24TT]
+        SW2[Switch2<br/>2960]
     end
     
-    PC1 -->|straight-through| SW1
-    PC2 -->|straight-through| SW1
-    SW1 -->|straight-through| R1
-    R1 -->|crossover| R2
-    R2 -->|straight-through| SW2
-    SW2 -->|straight-through| PC3
-    SW2 -->|straight-through| PC4
+    PC1 -->|straight-through<br/>Fa0/1| SW1
+    PC2 -->|straight-through<br/>Fa0/2| SW1
+    SW1 -->|Gi0/1<br/>straight-through<br/>Gi0/0| R1
+    R1 -->|Gi0/1<br/>crossover<br/>Gi0/0| R2
+    R2 -->|Gi0/1<br/>straight-through<br/>Gi0/1| SW2
+    SW2 -->|Fa0/1<br/>straight-through| PC3
+    SW2 -->|Fa0/2<br/>straight-through| PC4
 ```
 
 ### **Packet Flow Visualization**
 ```mermaid
 sequenceDiagram
     participant PC1 as PC1 (Network A)<br/>192.168.1.10
-    participant R1 as R1: 1941 Router<br/>G0/0: 192.168.1.1<br/>G0/1: 10.0.0.1
-    participant R2 as R2: 1941 Router<br/>G0/0: 10.0.0.2<br/>G0/1: 192.168.2.1
+    participant R1 as R1: 2911 Router<br/>G0/0: 192.168.1.1<br/>G0/1: 10.0.0.1
+    participant R2 as R2: 2911 Router<br/>G0/0: 10.0.0.2<br/>G0/1: 192.168.2.1
     participant PC3 as PC3 (Network C)<br/>192.168.2.10
 
     Note over PC1,PC3: PC1 pings PC3 (192.168.2.10)
@@ -108,14 +108,14 @@ sequenceDiagram
 ### **Device Specifications**
 | Device | Model | Role | Key Interfaces |
 |--------|-------|------|----------------|
-| R1 | Cisco 1941 | HQ Router | G0/0: 192.168.1.1/24, G0/1: 10.0.0.1/30 |
-| R2 | Cisco 1941 | Branch Router | G0/0: 10.0.0.2/30, G0/1: 192.168.2.1/24 |
-| Switch1 | 2960-24TT | HQ Access | Fa0/1-24 for PCs |
-| Switch2 | 2960-24TT | Branch Access | Fa0/1-24 for PCs |
+| R1 | Cisco 2911 | HQ Router | G0/0: 192.168.1.1/24, G0/1: 10.0.0.1/30 |
+| R2 | Cisco 2911 | Branch Router | G0/0: 10.0.0.2/30, G0/1: 192.168.2.1/24 |
+| Switch1 | 2960 | HQ Access | Fa0/1-24 for PCs |
+| Switch2 | 2960 | Branch Access | Fa0/1-24 for PCs |
 
 ### **The WHY**
 - **Why /30 for WAN link?** Efficient use of IP space for point-to-point connections
-- **Why 1941 routers?** Enterprise-grade with Gigabit Ethernet interfaces
+- **Why 2911 routers?** Enterprise-grade with Gigabit Ethernet interfaces
 - **Why static routing?** Demonstrates manual route configuration fundamentals
 - **Why multiple end devices?** Real-world network simulation
 
@@ -123,19 +123,20 @@ sequenceDiagram
 
 ### **R1 Configuration (HQ Router)**
 ```bash
-R1> enable
-R1# configure terminal
+Router1> enable
+Router1# configure terminal
+Router1(config)# hostname R1
 
 ! Configure LAN interface (Network A)
 R1(config)# interface gigabitethernet 0/0
-R1(config-if)# description HQ-LAN-Network-A
+R1(config-if)# description # gateway for network A #
 R1(config-if)# ip address 192.168.1.1 255.255.255.0
 R1(config-if)# no shutdown
 R1(config-if)# exit
 
 ! Configure WAN interface (Network B)
 R1(config)# interface gigabitethernet 0/1
-R1(config-if)# description WAN-Link-to-R2
+R1(config-if)# description # p2p # 
 R1(config-if)# ip address 10.0.0.1 255.255.255.252
 R1(config-if)# no shutdown
 R1(config-if)# exit
@@ -143,24 +144,26 @@ R1(config-if)# exit
 ! Add static route to Network C via R2
 R1(config)# ip route 192.168.2.0 255.255.255.0 10.0.0.2
 R1(config)# end
+
 R1# copy running-config startup-config
 ```
 
 ### **R2 Configuration (Branch Router)**
 ```bash
-R2> enable
-R2# configure terminal
+Router2> enable
+Router2# configure terminal
+Router2(config)# hostname R2
 
 ! Configure WAN interface (Network B)
 R2(config)# interface gigabitethernet 0/0
-R2(config-if)# description WAN-Link-to-R1
+R2(config-if)# description # p2p #
 R2(config-if)# ip address 10.0.0.2 255.255.255.252
 R2(config-if)# no shutdown
 R2(config-if)# exit
 
 ! Configure LAN interface (Network C)
 R2(config)# interface gigabitethernet 0/1
-R2(config-if)# description Branch-LAN-Network-C
+R2(config-if)# description # gateway for network C #
 R2(config-if)# ip address 192.168.2.1 255.255.255.0
 R2(config-if)# no shutdown
 R2(config-if)# exit
@@ -168,15 +171,16 @@ R2(config-if)# exit
 ! Add static route to Network A via R1
 R2(config)# ip route 192.168.1.0 255.255.255.0 10.0.0.1
 R2(config)# end
+
 R2# copy running-config startup-config
 ```
 
 ### **Switch Configurations**
 ```bash
 ! Basic switch configuration (both switches)
-Switch> enable
-Switch# configure terminal
-Switch(config)# hostname SW1
+Switch1> enable
+Switch1# configure terminal
+Switch1(config)# hostname SW1
 SW1(config)# exit
 SW1# copy running-config startup-config
 ```
@@ -338,5 +342,6 @@ By completing this lab, you will understand:
 ---
 
 **Maintained by:** Rick's Home Lab  
+
 *Part of the CCNA Fundamentals Series - Mastering Routing Concepts*
 
