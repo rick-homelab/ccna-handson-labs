@@ -1,6 +1,6 @@
 # **Project 4: Basic VLAN Configuration**
 
-**Time Estimate:** 30 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
+**Time Estimate:** 30 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-6
 
 ## **Table of Contents**
 - [Objective](#objective)
