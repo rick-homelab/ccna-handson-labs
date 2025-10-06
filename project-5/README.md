@@ -1,6 +1,6 @@
 # **Project 5: Router-on-a-Stick Inter-VLAN Routing**
 
-**Time Estimate:** 40 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-5
+**Time Estimate:** 40 minutes | **Difficulty:** Beginner-Intermediate | **Status:** Tested ✓ | **Last Updated:** 2025-10-6
 
 ## **Table of Contents**
 - [Objective](#objective)
@@ -70,7 +70,7 @@ graph TB
     PC4 -->|access port<br/>Fa0/4| SW
     PC5 -->|access port<br/>Fa0/5| SW
     PC6 -->|access port<br/>Fa0/6| SW
-    SW -->|802.1Q trunk<br/>Fa0/24| R
+    SW -->|802.1Q trunk<br/>Gi0/1| R
 ```
 
 ### **Packet Flow Visualization**
@@ -106,7 +106,7 @@ sequenceDiagram
 | VLAN 20 | 10.1.20.0/24 | HR Department |
 | Router G0/0.10 | 10.1.10.1/24 | VLAN 10 Gateway |
 | Router G0/0.20 | 10.1.20.1/24 | VLAN 20 Gateway |
-| Trunk Port | Switch Fa0/24 | Carries multiple VLANs |
+| Trunk Port | Switch Gi0/1 | Carries multiple VLANs |
 
 ### **The WHY**
 - **Why Router-on-a-Stick?** Cost-effective inter-VLAN routing with single interface
@@ -122,11 +122,11 @@ Switch> enable
 Switch# configure terminal
 
 ! Configure trunk port to router
-Switch(config)# interface fastethernet 0/24
+Switch(config)# interface gigabitethernet 0/1
 Switch(config-if)# switchport mode trunk
-Switch(config-if)# switchport trunk native vlan 99
+Switch(config-if)# switchport trunk native vlan 1001
 Switch(config-if)# switchport trunk allowed vlan 10,20
-Switch(config-if)# description Trunk to Router G0/0
+Switch(config-if)# description # trunk link to router # 
 Switch(config-if)# no shutdown
 Switch(config-if)# exit
 
@@ -140,21 +140,21 @@ Router> enable
 Router# configure terminal
 
 ! Enable physical interface first
-Router(config)# interface gigabitethernet 0/0/0
-Router(config-if)# description Trunk to Switch Fa0/24
+Router(config)# interface gigabitethernet 0/0
+Router(config-if)# description Trunk to Switch Gi0/1
 Router(config-if)# no shutdown
 Router(config-if)# exit
 
 ! Configure sub-interface for VLAN 10
 Router(config)# interface gigabitethernet 0/0.10
-Router(config-subif)# description VLAN 10 - Sales Department
+Router(config-subif)# description # gateway for valn 10 #
 Router(config-subif)# encapsulation dot1Q 10
 Router(config-subif)# ip address 10.1.10.1 255.255.255.0
 Router(config-subif)# exit
 
 ! Configure sub-interface for VLAN 20
 Router(config)# interface gigabitethernet 0/0.20
-Router(config-subif)# description VLAN 20 - HR Department
+Router(config-subif)# description # gateway for vlan 20 #
 Router(config-subif)# encapsulation dot1Q 20
 Router(config-subif)# ip address 10.1.20.1 255.255.255.0
 Router(config-subif)# exit
@@ -177,7 +177,7 @@ PC6: 10.1.20.12/24 | Gateway: 10.1.20.1
 ```
 
 ### **The WHY**
-- **Why native VLAN 99?** Security best practice (avoid using default VLAN 1)
+- **Why native VLAN 1001?** Security best practice (avoid using default VLAN 1)
 - **Why allowed VLAN list?** Restricts trunk to only necessary VLANs
 - **Why encapsulation?** Binds sub-interface to specific VLAN ID
 - **Why gateway configuration?** Tells PCs how to reach other networks
@@ -189,17 +189,17 @@ PC6: 10.1.20.12/24 | Gateway: 10.1.20.1
 # Switch trunk verification:
 Switch# show interfaces trunk
 Port        Mode             Encapsulation  Status        Native vlan
-Fa0/24      on               802.1q         trunking      99
+Gi0/0       on               802.1q         trunking      1001
 
 Port        Vlans allowed on trunk
-Fa0/24      10,20
+Gi0/0       10,20
 
 # Router sub-interface status:
 Router# show ip interface brief
-Interface                  IP-Address      OK? Method Status
-GigabitEthernet0/0       unassigned      YES manual up
-GigabitEthernet0/0.10    10.1.10.1       YES manual up
-GigabitEthernet0/0.20    10.1.20.1       YES manual up
+Interface                  IP-Address      OK?     Method     Status
+GigabitEthernet0/0       unassigned        YES     manual     up
+GigabitEthernet0/0.10    10.1.10.1         YES     manual     up
+GigabitEthernet0/0.20    10.1.20.1         YES     manual     up
 
 # Successful inter-VLAN ping:
 C:\> ping 10.1.20.10
