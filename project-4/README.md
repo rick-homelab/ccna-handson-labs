@@ -163,11 +163,11 @@ VLAN Name                             Status    Ports
 10   Sales                            active    Fa0/1, Fa0/2, Fa0/3
 20   HR                               active    Fa0/4, Fa0/5, Fa0/6
 
-# Successful intra-VLAN ping:
+# (from VLAN 10) Successful intra-VLAN ping: 
 C:\> ping 10.1.10.11
 Reply from 10.1.10.11: bytes=32 time<1ms TTL=128
 
-# Failed inter-VLAN ping (expected):
+# (form VLAN 10) Failed inter-VLAN ping (expected): 
 C:\> ping 10.1.20.10
 Request timed out.
 ```
@@ -276,6 +276,7 @@ By completing this lab, you will understand:
 
 ---
 
-**Maintained by:** Rick's Home Lab  
+**Maintained by:** Rick's Home Lab 
+
 *Part of the CCNA Fundamentals Series - Mastering Layer 2 Segmentation*
 
