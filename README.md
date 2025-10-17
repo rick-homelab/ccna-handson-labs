@@ -1,7 +1,7 @@
 # **CCNA Fundamentals Mastery**
 
-**Portfolio Scope:** 10 Comprehensive Projects | **Skill Level:** Beginner to Advanced 
-**Status:** Active Development | **Last Updated:** 2024-10-06
+**Portfolio Scope:** 10 Comprehensive Projects | **Skill Level:** Beginner to Advanced  
+**Status:** Active Development | **Last Updated:** 2025-10-17
 
 ## **Table of Contents**
 - [Portfolio Overview](#portfolio-overview)
