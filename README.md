@@ -131,7 +131,7 @@ Services:
 
 ---
 
-**Maintained by:** Sai Aik Kwan | **[Rick's Home Lab](https://github.com/rick-homelab)**  
+**Maintained by:** Sai Aik Kwan | **[Rick's Home Lab](https://github.com/rick-homela)**  
 *Documenting the networking learning journey from fundamentals to advanced concepts.*
 
 *"Mastering networking through systematic, project-based learning and comprehensive documentation."*
