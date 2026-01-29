@@ -1,4 +1,4 @@
-# **Lab 01: Quick Overview **
+# Lab 01: Quick Overview
 
 ## **🎯 Core Purpose**
 Configure a basic 2-PC network through a switch with device security.
