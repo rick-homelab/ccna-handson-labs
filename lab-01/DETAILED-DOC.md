@@ -265,7 +265,7 @@ show interfaces status      # See if ports are connected
 ## **Author & Ownership**
 
 **Author:** **[Sai Aik Kwan](#https://www.linkedin.com/in/sai-aik-kwan-251b62396/)**  
-**Maintained by:** **[Sai Aik Kwan](#https://www.linkedin.com/in/sai-aik-kwan-251b62396/)**
+**Maintained by:** **[Sai Aik Kwan](#https://www.linkedin.com/in/sai-aik-kwan-251b62396/)**  
 **Working Lab File:** [Download Lab-01](./lab-01.pkt)
 
 *"Every expert was once a beginner. You've just taken your first step into networking - congratulations!"*
