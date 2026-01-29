@@ -6,7 +6,7 @@
 ---
 
 ## **Table of Contents**
-- [🎯 What You're Building Today](#-what-youre-building-today)
+- [🎯 What we're Building Today](#-what-were-building-today)
 - [📖 How This Lab Works - Simple Analogy](#-how-this-lab-works---simple-analogy)
 - [🔄 The Big Picture Flow](#-the-big-picture-flow)
 - [🔧 Step-by-Step Configuration Explained](#-step-by-step-configuration-explained)
@@ -42,12 +42,15 @@ Think of this setup like setting up communication between two rooms in a small o
 Here's what happens when PC1 tries to talk to PC2:
 
 ```mermaid
-graph LR
-    PC1[PC1: "Hey PC2,<br/>are you there?"] --> SW1[Switch learns:<br/>"PC1 is on port 1"] --> PC2[PC2: "Yes I'm here!"] --> SW1[Switch learns:<br/>"PC2 is on port 2"] --> PC1
+graph TB
+    A[PC1: Sends to PC2] --> B{Switch: Know PC2 MAC?}
+    B -->|No| C[Flood to all ports]
+    C --> D[PC2 receives]
+    D --> E[PC2 replies]
+    E --> F[Switch learns PC2 location]
+    F --> G[Adds to MAC table]
+    B -->|Yes| H[Send to specific port only]
     
-    style SW1 fill:#e1f5fe
-    style PC1 fill:#f3e5f5
-    style PC2 fill:#f3e5f5
 ```
 
 **What the switch is learning during this conversation:**
