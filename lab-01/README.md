@@ -27,5 +27,5 @@ show running-config
 
 ## **Author & Ownership**
 
-**Maintained by:** **[Sai Aik Kwan](#https://www.linkedin.com/in/sai-aik-kwan-251b62396/)** | *[Rick's Home Lab](#https://www.github.com/rick-homelab)  
+**Maintained by:** **[Sai Aik Kwan](#https://www.linkedin.com/in/sai-aik-kwan-251b62396)** | **[Rick's Home Lab](#https://www.github.com/rick-homelab)**
 > **Start with 'zero' to be the 'hero'.**
