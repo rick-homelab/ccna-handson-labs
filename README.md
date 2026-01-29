@@ -25,7 +25,7 @@ Every lab includes:
 ## **Lab Progression**
 
 ### **Phase 1: Foundation (5 Labs)**
-**Focus:** Basic device configuration, IP addressing, initial connectivity
+**Focus:** Basic device configuration, IP addressing, initial connectivity  
 1. **Lab 01:** Basic Device Configuration & Connectivity  
 2. **Lab 02:** IPv4 Subnetting Practice  
 3. **Lab 03:** IPv6 Configuration  
