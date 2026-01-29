@@ -1,7 +1,7 @@
 # **CCNA Hands-On Labs**
 
 **Portfolio Scope:** 25+ Focused Labs | **Skill Level:** CCNA 200-301   
-**Status:** Active Development | **Last Updated:** time  
+**Status:** Active Development | **Last Updated:** 1/29/2026  
 
 ## **Table of Contents**
 - [Overview](#overview)
