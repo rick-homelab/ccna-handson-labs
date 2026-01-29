@@ -1,140 +1,125 @@
-# **CCNA Fundamentals Mastery**
+Perfect! Let me create a focused, practical CCNA lab repository README based on the original scope I suggested.
 
-**Portfolio Scope:** 10 Comprehensive Projects | **Skill Level:** Beginner to Advanced  
-**Status:** Active Development | **Last Updated:** 2025-10-17
+# **CCNA Hands-On Labs**
+
+**Portfolio Scope:** 25+ Focused Labs | **Skill Level:** CCNA 200-301   
+**Status:** Active Development | **Last Updated:** time  
 
 ## **Table of Contents**
-- [Portfolio Overview](#portfolio-overview)
-- [Learning Journey](#learning-journey)
-- [Project Roadmap](#project-roadmap)
-- [Technology Stack](#technology-stack)
+- [Overview](#overview)
+- [Lab Structure](#lab-structure)
+- [Lab Progression](#lab-progression)
 - [Getting Started](#getting-started)
-- [Project Index](#project-index)
+- [Lab Index](#lab-index)
+- [Author & Ownership](#author--ownership)
 
-## **Portfolio Overview**
-> A comprehensive learning journey through networking fundamentals, demonstrating systematic skill development from basic concepts to advanced enterprise implementations.
+## **Overview**
+> A curated collection of **hands-on CCNA labs** that systematically build skills from basic configuration to complex network troubleshooting. Each lab focuses on specific CCNA exam topics with real-world applications.
 
-### **Learning Approach**
-- **Foundation First:** Master core concepts before advancing
-- **Progressive Complexity:** Structured skill building across projects
-- **Hands-On Practice:** Every project includes working implementations
-- **Real-World Context:** Practical applications of theoretical concepts
+## **Lab Structure**
+Every lab includes:
+- **Objective:** Clear learning goal
+- **Topology:** Network diagram and device list
+- **Tasks:** Step-by-step configuration instructions
+- **Verification:** Commands to test your work
+- **Files:** Packet Tracer (.pkt) files and configurations
 
-## **Learning Journey**
+## **Lab Progression**
 
-### **Skill Development Path**
-```markdown
-## Foundational Phase (Projects 1-3)
-- Basic switching and VLAN concepts
-- IP addressing and subnetting practice
-- Initial troubleshooting experience
+### **Phase 1: Foundation (5 Labs)**
+**Focus:** Basic device configuration, IP addressing, initial connectivity
+1. **Lab 01:** Basic Device Configuration & Connectivity
+2. **Lab 02:** IPv4 Subnetting Practice
+3. **Lab 03:** IPv6 Configuration
+4. **Lab 04:** Static Routing - Simple Network
+5. **Lab 05:** Default & Floating Static Routes
 
-## Intermediate Phase (Projects 4-6)  
-- Multi-service network design
-- Security implementation
-- Redundancy and optimization
+### **Phase 2: Switching Mastery (7 Labs)**
+**Focus:** VLANs, Trunking, STP, Inter-VLAN routing
+6. **Lab 06:** Basic VLAN Configuration
+7. **Lab 07:** VLAN Trunking (802.1Q)
+8. **Lab 08:** Inter-VLAN Routing (Router-on-a-Stick)
+9. **Lab 09:** Inter-VLAN Routing with Layer 3 Switch
+10. **Lab 10:** Spanning Tree Protocol Basics
+11. **Lab 11:** STP Optimization (PortFast, BPDUGuard)
+12. **Lab 12:** EtherChannel Configuration
 
-## Advanced Phase (Projects 7-10)
-- Enterprise-scale architecture
-- Specialized environment networking
-- Complex migration planning
-```
+### **Phase 3: Routing & Services (8 Labs)**
+**Focus:** OSPF, ACLs, NAT, DHCP
+13. **Lab 13:** OSPF Single Area - Basic Configuration
+14. **Lab 14:** OSPF Troubleshooting
+15. **Lab 15:** Standard ACLs
+16. **Lab 16:** Extended ACLs
+17. **Lab 17:** DHCP Server & Relay
+18. **Lab 18:** Static NAT
+19. **Lab 19:** PAT (Port Address Translation)
+20. **Lab 20:** NTP & Syslog
 
-## **Project Roadmap**
-
-### **Beginner Level (Projects 1-3)**
-| Project | Learning Focus | Core Technologies | Key Concepts |
-|---------|----------------|-------------------|-------------|
-| 1. Home Lab Network | Foundation Building | VLANs, Basic Routing | Switching Fundamentals |
-| 2. Coffee Shop Network | Public Access Design | Wireless, Security | Guest Isolation |
-| 3. Small Office Network | Business Infrastructure | Inter-VLAN, Services | Office Networking |
-
-### **Intermediate Level (Projects 4-6)**
-| Project | Learning Focus | Core Technologies | Key Concepts |
-|---------|----------------|-------------------|-------------|
-| 4. Hotel Network | Multi-Service Management | QoS, Port Security | Hospitality Networking |
-| 5. Manufacturing Network | Industrial Applications | IoT, Real-time Protocols | OT/IT Integration |
-| 6. Corporate Office Network | Enterprise Standards | OSPF, Redundancy | Business Infrastructure |
-
-### **Advanced Level (Projects 7-10)**
-| Project | Learning Focus | Core Technologies | Key Concepts |
-|---------|----------------|-------------------|-------------|
-| 7. University Campus | Large-Scale Design | Multi-area OSPF, Wireless | Campus Architecture |
-| 8. Bank Network | High-Security Implementation | Advanced ACLs, Compliance | Financial Security |
-| 9. Hospital Network | Critical Infrastructure | HIPAA, Medical QoS | Healthcare Networking |
-| 10. Network Migration | Enterprise Integration | Change Management | Business Transformation |
-
-## **Technology Stack**
-
-### **Core Platform**
-- **Primary:** Cisco Packet Tracer
-- **Focus:** Hands-on configuration and verification
-
-### **Technologies Mastered**
-```yaml
-Switching:
-  - VLAN Architecture
-  - STP & EtherChannel
-  - Port Security
-
-Routing:
-  - Static Routing
-  - OSPF Implementation
-  - Inter-VLAN Routing
-
-Security:
-  - Access Control Lists
-  - Network Segmentation
-  - Basic Security Policies
-
-Services:
-  - DHCP & DNS
-  - NAT/PAT
-  - Quality of Service
-```
+### **Phase 4: Security & Integration (5 Labs)**
+**Focus:** Network security, integrated scenarios
+21. **Lab 21:** Switch Security (Port Security, DHCP Snooping)
+22. **Lab 22:** Device Hardening (SSH, AAA)
+23. **Lab 23:** Integrated Network (VLANs + OSPF + NAT)
+24. **Lab 24:** IPv4 & IPv6 Dual-Stack
+25. **Lab 25:** Troubleshooting Final Exam
 
 ## **Getting Started**
 
 ### **Requirements**
-```markdown
-## Foundational Knowledge:
-- Basic networking concepts
-- Understanding of IP addressing
-- Willingness to learn and experiment
+- **Software:** Cisco Packet Tracer (free from Cisco NetAcad)
+- **Knowledge:** Basic networking concepts
+- **Time:** 1-2 hours per lab
+- **Bonus:** Consistency & Patience  
 
-## Technical Setup:
-- Cisco Packet Tracer
-- Documentation tools
-- Version control (Git)
+### **How to Use These Labs**
+1. Start with Lab 01 and progress sequentially
+2. Read the lab objective before starting
+3. Try to configure without looking at solutions first
+4. Use verification commands to check your works
+5. Documents your own notes and variations
 
-## Learning Mindset:
-- Patience for troubleshooting
-- Systematic approach to problems
-- Commitment to documentation
-```
+## **Lab Index**
 
-## **Project Index**
+### **Current Status**
+| Lab  | Name | Status | Difficulty |
+|------|------|--------|------------|
+| 01 | Basic Device Config | ✅ Complete | Beginner |
+| 02 | IPv4 Subnetting | ✅ Complete | Beginner |
+| 03 | IPv6 Configuration | 🔄 In Progress | Beginner |
+| 04 | Static Routing | 📋 Planned | Beginner |
+| 05 | Default Routes | 📋 Planned | Beginner |
+| 06 | Basic VLANs | 📋 Planned | Beginner |
+| 07 | VLAN Trunking | 📋 Planned | Intermediate |
+| 08 | Router-on-a-Stick | 📋 Planned | Intermediate |
+| 09 | Layer 3 Switching | 📋 Planned | Intermediate |
+| 10 | STP Basics | 📋 Planned | Intermediate |
+| 11 | STP Optimization | 📋 Planned | Intermediate |
+| 12 | EtherChannel | 📋 Planned | Intermediate |
+| 13 | OSPF Basic | 📋 Planned | Intermediate |
+| 14 | OSPF Troubleshooting | 📋 Planned | Intermediate |
+| 15 | Standard ACLs | 📋 Planned | Intermediate |
+| 16 | Extended ACLs | 📋 Planned | Intermediate |
+| 17 | DHCP | 📋 Planned | Beginner |
+| 18 | Static NAT | 📋 Planned | Intermediate |
+| 19 | PAT | 📋 Planned | Intermediate |
+| 20 | NTP & Syslog | 📋 Planned | Beginner |
+| 21 | Switch Security | 📋 Planned | Intermediate |
+| 22 | Device Hardening | 📋 Planned | Intermediate |
+| 23 | Integrated Network | 📋 Planned | Advanced |
+| 24 | Dual-Stack | 📋 Planned | Advanced |
+| 25 | Troubleshooting Final | 📋 Planned | Advanced |
+---
 
-### **Implementation Progress**
-| Project | Status | Focus Point | Difficulty |
-|---------|--------|----------------|---------------|
-| 01. Home Lab Network | Ready | Foundation Building | Beginner |
-| 02. Coffee Shop Network | Planned | Public Access Design | Beginner |
-| 03. Small Office Network | Planned | Business Infrastructure | Beginner |
-| 04. Hotel Network | Planned | Multi-Service Management | Intermediate |
-| 05. Manufacturing Network | Planned | Industrial Applications | Intermediate |
-| 06. Corporate Office Network | Planned | Enterprise Standards | Intermediate |
-| 07. University Campus | Planned | Large-Scale Design | Advanced |
-| 08. Bank Network | Planned | High-Security Implementation | Advanced |
-| 09. Hospital Network | Planned | Critical Infrastructure | Advanced |
-| 10. Network Migration | Planned | Enterprise Integration | Advanced |
+### **Resources**
+- [Cisco Packet Tracer Download](https://www.netacad.com/courses/packet-tracer)
+- [Official CCNA Exam Topics](https://learningnetwork.cisco.com/s/ccna-exam-topics)
+- [Jeremy's IT Lab (YouTube)](https://www.youtube.com/c/JeremysITLab)
 
 ---
 
-**Maintained by:** Sai Aik Kwan | **[Rick's Home Lab](https://github.com/rick-homela)**  
-*Documenting the networking learning journey from fundamentals to advanced concepts.*
+## **Author & Ownership**
 
-*"Mastering networking through systematic, project-based learning and comprehensive documentation."*
+**Author:** **[Sai Aik Kwan](#link)**  
+**GitHub:** **[Rick's HomeLab](#link)**
 
----
-what is new ? 
+> **Master networking by doing, not just reading.**
