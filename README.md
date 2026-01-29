@@ -1,5 +1,3 @@
-Perfect! Let me create a focused, practical CCNA lab repository README based on the original scope I suggested.
-
 # **CCNA Hands-On Labs**
 
 **Portfolio Scope:** 25+ Focused Labs | **Skill Level:** CCNA 200-301   
