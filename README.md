@@ -25,41 +25,41 @@ Every lab includes:
 ## **Lab Progression**
 
 ### **Phase 1: Foundation (5 Labs)**
-**Focus:** Basic device configuration, IP addressing, initial connectivity
-1. **Lab 01:** Basic Device Configuration & Connectivity
-2. **Lab 02:** IPv4 Subnetting Practice
-3. **Lab 03:** IPv6 Configuration
-4. **Lab 04:** Static Routing - Simple Network
-5. **Lab 05:** Default & Floating Static Routes
+**Focus:** Basic device configuration, IP addressing, initial connectivity  
+1. **Lab 01:** Basic Device Configuration & Connectivity  
+2. **Lab 02:** IPv4 Subnetting Practice  
+3. **Lab 03:** IPv6 Configuration  
+4. **Lab 04:** Static Routing - Simple Network  
+5. **Lab 05:** Default & Floating Static Routes  
 
 ### **Phase 2: Switching Mastery (7 Labs)**
-**Focus:** VLANs, Trunking, STP, Inter-VLAN routing
-6. **Lab 06:** Basic VLAN Configuration
-7. **Lab 07:** VLAN Trunking (802.1Q)
-8. **Lab 08:** Inter-VLAN Routing (Router-on-a-Stick)
-9. **Lab 09:** Inter-VLAN Routing with Layer 3 Switch
-10. **Lab 10:** Spanning Tree Protocol Basics
-11. **Lab 11:** STP Optimization (PortFast, BPDUGuard)
-12. **Lab 12:** EtherChannel Configuration
+**Focus:** VLANs, Trunking, STP, Inter-VLAN routing  
+6. **Lab 06:** Basic VLAN Configuration  
+7. **Lab 07:** VLAN Trunking (802.1Q)  
+8. **Lab 08:** Inter-VLAN Routing (Router-on-a-Stick)  
+9. **Lab 09:** Inter-VLAN Routing with Layer 3 Switch  
+10. **Lab 10:** Spanning Tree Protocol Basics  
+11. **Lab 11:** STP Optimization (PortFast, BPDUGuard)  
+12. **Lab 12:** EtherChannel Configuration  
 
 ### **Phase 3: Routing & Services (8 Labs)**
-**Focus:** OSPF, ACLs, NAT, DHCP
-13. **Lab 13:** OSPF Single Area - Basic Configuration
-14. **Lab 14:** OSPF Troubleshooting
-15. **Lab 15:** Standard ACLs
-16. **Lab 16:** Extended ACLs
-17. **Lab 17:** DHCP Server & Relay
-18. **Lab 18:** Static NAT
-19. **Lab 19:** PAT (Port Address Translation)
-20. **Lab 20:** NTP & Syslog
+**Focus:** OSPF, ACLs, NAT, DHCP  
+13. **Lab 13:** OSPF Single Area - Basic Configuration  
+14. **Lab 14:** OSPF Troubleshooting  
+15. **Lab 15:** Standard ACLs  
+16. **Lab 16:** Extended ACLs  
+17. **Lab 17:** DHCP Server & Relay  
+18. **Lab 18:** Static NAT  
+19. **Lab 19:** PAT (Port Address Translation)  
+20. **Lab 20:** NTP & Syslog  
 
 ### **Phase 4: Security & Integration (5 Labs)**
-**Focus:** Network security, integrated scenarios
-21. **Lab 21:** Switch Security (Port Security, DHCP Snooping)
-22. **Lab 22:** Device Hardening (SSH, AAA)
-23. **Lab 23:** Integrated Network (VLANs + OSPF + NAT)
-24. **Lab 24:** IPv4 & IPv6 Dual-Stack
-25. **Lab 25:** Troubleshooting Final Exam
+**Focus:** Network security, integrated scenarios  
+21. **Lab 21:** Switch Security (Port Security, DHCP Snooping)  
+22. **Lab 22:** Device Hardening (SSH, AAA)  
+23. **Lab 23:** Integrated Network (VLANs + OSPF + NAT)  
+24. **Lab 24:** IPv4 & IPv6 Dual-Stack  
+25. **Lab 25:** Troubleshooting Final Exam  
 
 ## **Getting Started**
 
