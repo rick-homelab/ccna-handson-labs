@@ -19,7 +19,7 @@
 - [🎓 What You've Actually Learned](#-what-youve-actually-learned)
 - [🚀 Ready for the Real World?](#-ready-for-the-real-world)
 - [📝 Quick Reference Cheat Sheet](#-quick-reference-cheat-sheet)
-- [Author & Ownership](#-author--ownership)
+- [Author & Ownership](#author--ownership)
 ---
 
 ## **🎯 What we're Building Today**
