@@ -30,7 +30,7 @@ Every lab includes:
 2. **Lab 02:** IPv4 Subnetting Practice  
 3. **Lab 03:** IPv6 Configuration  
 4. **Lab 04:** Static Routing - Simple Network  
-5. **Lab 05:** Default & Floating Static Routes  
+5. **Lab 05:** Default & Floating Static Routes   
 
 ### **Phase 2: Switching Mastery (7 Labs)**
 **Focus:** VLANs, Trunking, STP, Inter-VLAN routing  
