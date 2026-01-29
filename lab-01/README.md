@@ -1,7 +1,7 @@
 # Lab 01: Quick Overview
 
 ## **🎯 Core Purpose**
-Configure a basic 2-PC network through a switch with device security.
+> Configure a basic 2-PC network through a switch with device security.
 
 ## **🔄 Main Flow**
 1. **Switch Setup** → Console access → Hostname → Passwords → SSH
