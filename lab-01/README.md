@@ -4,7 +4,7 @@
 > Configure a basic 2-PC network through a switch with device security.
 
 ## **🔄 Main Flow**
-1. **Switch Setup** → Console access → Hostname → Passwords → SSH
+1. **Switch Setup** → Console access → Hostname → Passwords 
 2. **PC Setup** → IP addresses (192.168.1.10 & .20)
 3. **Test** → Ping between PCs
 4. **Save** → Copy running to startup
